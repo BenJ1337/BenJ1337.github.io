@@ -32,7 +32,7 @@
             }
             .prot-wrapper li {
                 white-space: pre;
-                font-size: 30px;
+                font-size: 22px;
             }
             #result { width: 75px }
             .tools-wrapper {
@@ -152,6 +152,7 @@
             start: 0,
             maxValue1: 10,
             maxValue2: 10,
+            attempts: 1,
             operator: 'x'
         }
 
@@ -159,6 +160,7 @@
             factor1Elm.value = Math.floor(Math.random() * model.maxValue1+1);
             factor2Elm.value = Math.floor(Math.random() * model.maxValue2+1);
             resultElm.value = '';
+            model.attempts = 1;
             model.start = performance.now();
         }
 
@@ -324,10 +326,11 @@
                 const val1 = factor1.value.toString().padStart(2, ' ');
                 const val2 = factor2.value.toString().padEnd(2, ' ');
                 const val3 = input.target.value.toString().padEnd(3, ' ');
-                addResult(`${val1} x ${val2} = ${val3} | Dauer: ${Math.floor(duration()/1000)} Sekunden`);
+                addResult(`${val1} x ${val2} = ${val3} | Dauer: ${Math.floor(duration()/1000).toString().padEnd(2, ' ')} Sekunden | Attempts: ${model.attempts}`);
                 neueAufgabe();
             }
             if(!expectedValue.toString().startsWith(input.target.value.toString())) {
+                model.attempts++;
                 input.target.value = '';
             }
         });
