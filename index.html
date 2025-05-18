@@ -156,7 +156,7 @@
             operator: 'x'
         }
 
-        const neueAufgabe = () => {
+        const newTerm = () => {
             factor1Elm.value = Math.floor(Math.random() * model.maxValue1+1);
             factor2Elm.value = Math.floor(Math.random() * model.maxValue2+1);
             resultElm.value = '';
@@ -212,7 +212,7 @@
         const init = () => {
             model.start = performance.now();
             setMaxValues();
-            neueAufgabe();
+            newTerm();
             initTimer();
             showOperator();
         }
@@ -224,7 +224,7 @@
         
         document.getElementById("applyValues").onclick = (button) => {
             setMaxValues();
-            neueAufgabe();
+            newTerm();
             resetTimerAndSetFocus();
             setOperator();
             showOperator();
@@ -326,8 +326,8 @@
                 const val1 = factor1.value.toString().padStart(2, ' ');
                 const val2 = factor2.value.toString().padEnd(2, ' ');
                 const val3 = input.target.value.toString().padEnd(3, ' ');
-                addResult(`${val1} x ${val2} = ${val3} | Dauer: ${Math.floor(duration()/1000).toString().padEnd(2, ' ')} Sekunden | Attempts: ${model.attempts}`);
-                neueAufgabe();
+                addResult(`${val1} x ${val2} = ${val3} | Speed: ${Math.floor(duration()/1000).toString().padEnd(2, ' ')} seconds | Attempts: ${model.attempts}`);
+                newTerm();
             }
             if(!expectedValue.toString().startsWith(input.target.value.toString())) {
                 model.attempts++;
