@@ -1,0 +1,84 @@
+* {
+    font-family: "Space Mono", 'Courier New', Courier, monospace;
+}
+.wrapper {
+    width: 660px; 
+    margin: 10px auto;
+}
+.calc-wrapper {
+    font-size: 40px;
+    width: 350px;
+    margin: 0 auto;
+}
+.calc-wrapper input {
+    width: 50px;
+    font-size: 40px;
+}
+.prot-wrapper {
+    width: 100%;
+}
+.prot-wrapper ul {
+    list-style: none;
+    height: 50vh;
+    overflow: scroll;
+    padding: 0;
+    transition: opacity ease 0.5s;
+}
+.prot-wrapper li {
+    white-space: pre;
+    font-size: 22px;
+}
+#result { width: 75px }
+.tools-wrapper {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.4);
+    z-index: 1;
+}
+.tools-wrapper #showHideTools {
+    float: right;
+}
+.tools-wrapper div {
+    width: 100%;
+    padding: 5px 0;
+}
+.tools-wrapper button {
+    background: #FFF;
+    border: 1px dashed #666;
+    border-radius: 5px;
+    padding: 6px 10px;
+    transition: background ease 0.4s;
+    cursor: pointer;
+}
+.tools-wrapper button:hover {
+    background: #0f97d6;
+}
+.tools-wrapper .input {
+    font-size: 20px;
+    width: 50px;
+    height: 22px;
+    padding: 1px;
+}
+.tools-wrapper #operator {
+    width: 300px;
+}
+.timer-wrapper {
+    width: 200px;
+    height: 75px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+.timer-wrapper #timer {
+    font-size: 40px;
+    transition: opacity ease 0.5s;
+}
+input[type=number] {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield;
+}
