@@ -1,0 +1,217 @@
+/* ##############################################
+ * Setup and init
+ * ############################################## */
+const factor1Elm = document.getElementById("factor1");
+const factor2Elm = document.getElementById("factor2");
+const maxValue1Elm = document.getElementById("maxValue1");
+const maxValue2Elm = document.getElementById("maxValue2");
+const resultElm = document.getElementById("result");
+const operatorElm = document.getElementById("operator");
+const protElm = document.getElementById("prot");
+const timerElm = document.getElementById("timer");
+const toolsElm = document.getElementById("timer");
+const controlElementsElm = document.getElementById("controlElements");
+const operatorInTerminElm = document.getElementById("operatorInTermin");
+
+
+const model = {
+    start: 0,
+    maxValue1: 10,
+    maxValue2: 10,
+    attempts: 1,
+    operator: 'x'
+}
+
+const newTerm = () => {
+    factor1Elm.value = Math.floor(Math.random() * model.maxValue1+1);
+    factor2Elm.value = Math.floor(Math.random() * model.maxValue2+1);
+    resultElm.value = '';
+    model.attempts = 1;
+    model.start = performance.now();
+}
+
+const setMaxValues = () => {
+    if(maxValue1Elm.value !== '') {
+        model.maxValue1 = maxValue1Elm.value;
+    }
+    if(maxValue2Elm.value !== '') {
+        model.maxValue2 = maxValue2Elm.value;
+    }
+    console.debug(`MaxValue1: ${model.maxValue1}, MaxValue2: ${model.maxValue2}`);
+}
+
+const resetTimerAndSetFocus = () => {
+    model.start = performance.now();
+    resultElm.focus();
+}
+
+const initTimer = () => {
+    const interval = setInterval(() => { timerElm.textContent = Math.floor(duration()/1000); }, 1000);
+}
+
+const showOperator = () => {
+    operatorInTerminElm.textContent = model.operator;
+}
+
+const setOperator = () => {
+    switch(operatorElm.value) {
+        case '':
+        case '*':
+        case 'x': 
+            model.operator = 'x';
+            break;
+        case '+':
+            model.operator = '+';
+            break;
+        case '-':
+            model.operator = '-';
+            break;
+        case '/':
+        case ':': 
+            model.operator = ':';
+            break;
+        default:
+            throw Error(`Operator not expected: ${operatorElm.value}`);
+    }
+}
+
+const init = () => {
+    model.start = performance.now();
+    setMaxValues();
+    newTerm();
+    initTimer();
+    showOperator();
+}
+init();
+
+/* ##############################################
+ * Control panel
+ * ############################################## */
+
+document.getElementById("applyValues").onclick = (button) => {
+    setMaxValues();
+    newTerm();
+    resetTimerAndSetFocus();
+    setOperator();
+    showOperator();
+    console.debug(model);
+}
+
+document.getElementById("resetTimer").onclick = (button) => {
+    resetTimerAndSetFocus();
+}
+
+document.getElementById("hideTimer").onclick = (button) => {
+    resetTimerAndSetFocus();
+    timerElm.style.opacity = '0';
+}
+
+document.getElementById("showTimer").onclick = (button) => {
+    resetTimerAndSetFocus();
+    timerElm.style.opacity = '1';
+}
+
+document.getElementById("hideProt").onclick = (button) => {
+    protElm.style.opacity = '0';
+    resetTimerAndSetFocus();
+}
+
+document.getElementById("showProt").onclick = (button) => {
+    resetTimerAndSetFocus();
+    protElm.style.opacity = '1';
+}
+
+document.getElementById("showHideTools").onclick = (button) => {
+    resetTimerAndSetFocus();
+    if(controlElementsElm.style.display == 'none') {
+        controlElementsElm.style.display = 'initial';
+        button.target.textContent = 'Hide Controls';
+    } else {
+        controlElementsElm.style.display = 'none';
+        button.target.textContent = 'Show Controls';
+    }
+}
+
+const createLinkTag = (url) => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = url;
+    return link;
+}
+
+const addFontRef = () => {
+    document.head.appendChild(createLinkTag('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap'));
+}
+
+document.getElementById("loadFont").onclick = (button) => {
+    addFontRef();
+    button.target.style.display = 'none';
+    resetTimerAndSetFocus();
+}
+
+/* ##############################################
+ * Calculation
+ * ############################################## */
+
+resultElm.focus();
+
+const duration = () => {
+    let ende = performance.now();
+    return ende - model.start;
+}
+
+const addResult = (text) => {
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode(text));
+    protElm.appendChild(li);
+    protElm.scrollTop = protElm.scrollHeight;
+}
+
+const calc = (val1, val2, operator) => {
+    switch(operator) {
+        case 'x':
+            return val1 * val2;
+        case '+':
+            return val1 + val2;
+        case '-':
+            return val1 - val2;
+        case ':':
+            return val1 / val2;
+    }
+}
+
+resultElm.addEventListener('keyup', (input) => {
+    console.debug(`Input value: ${input.target.value}`);
+    if(isNaN(input.target.value)) {
+        console.debug('Not a Number');
+        input.target.value = '';
+    }
+    const expectedValue = calc(parseInt(factor1.value), parseInt(factor2.value), model.operator);
+    console.debug(`Expected value: ${expectedValue}`);
+    if(expectedValue == input.target.value) {
+        const val1 = factor1.value.toString().padStart(2, ' ');
+        const val2 = factor2.value.toString().padEnd(2, ' ');
+        const val3 = input.target.value.toString().padEnd(3, ' ');
+        addResult(`${val1} x ${val2} = ${val3} | Speed: ${Math.floor(duration()/1000).toString().padEnd(2, ' ')} seconds | Attempts: ${model.attempts}`);
+        newTerm();
+    }
+    if(!expectedValue.toString().startsWith(input.target.value.toString())) {
+        model.attempts++;
+        input.target.value = '';
+    }
+});
+
+operatorElm.addEventListener('keyup', function (input) {
+    switch(input.target.value) {
+        case '*':
+        case 'x': 
+        case '+':
+        /*case '-':
+        case '/':
+        case ':': */
+        case '': 
+            break;
+        default:
+            input.target.value = '';
+    }
+});
