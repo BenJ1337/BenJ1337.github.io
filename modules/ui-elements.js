@@ -1,0 +1,11 @@
+export const factor1Elm = document.getElementById("factor1");
+export const factor2Elm = document.getElementById("factor2");
+export const maxValue1Elm = document.getElementById("maxValue1");
+export const maxValue2Elm = document.getElementById("maxValue2");
+export const resultElm = document.getElementById("result");
+export const operatorElm = document.getElementById("operator");
+export const protElm = document.getElementById("prot");
+export const timerElm = document.getElementById("timer");
+export const toolsElm = document.getElementById("timer");
+export const controlElementsElm = document.getElementById("controlElements");
+export const operatorInTerminElm = document.getElementById("operatorInTermin");
