@@ -1,9 +1,11 @@
 import { model } from './model.js';
-import { calc, addResult, duration, newTerm } from './calc.js';
+import { calc, duration, newTerm } from './calc.js';
+import { addResult } from './controller.js';
 import {
     resultElm,
     operatorElm
 } from './ui-elements.js';
+import { storeModel } from './storage.js';
 
 export const addListeners = () => {
     resultElm.addEventListener('keyup', (input) => {
@@ -18,7 +20,12 @@ export const addListeners = () => {
             const val1 = factor1.value.toString().padStart(2, ' ');
             const val2 = factor2.value.toString().padEnd(2, ' ');
             const val3 = input.target.value.toString().padEnd(3, ' ');
-            addResult(`${val1} x ${val2} = ${val3} | Speed: ${Math.floor(duration()/1000).toString().padEnd(2, ' ')} seconds | Attempts: ${model.attempts}`);
+            const dur = Math.floor(duration()/1000);
+            const historyLength = model.history.length;
+            model.history.push({"id": historyLength, "value1": val1, "value2": val2, "input": val3, "duration": dur, "attempts": model.attempts});
+            console.debug(JSON.stringify(model.history));
+            storeModel(model);
+            addResult(model.history[historyLength]);
             newTerm();
         }
         if(!expectedValue.toString().startsWith(input.target.value.toString())) {

@@ -6,8 +6,7 @@ import {
     operatorElm, 
     resultElm, 
     operatorInTerminElm, 
-    timerElm, 
-    protElm 
+    timerElm
 } from './ui-elements.js';
 import { model } from './model.js';
 
@@ -35,7 +34,7 @@ export const resetTimerAndSetFocus = () => {
 }
 
 export const initTimer = () => {
-    const interval = setInterval(() => { timerElm.textContent = Math.floor(duration()/1000); }, 1000);
+    setInterval(() => { timerElm.textContent = Math.floor(duration()/1000); }, 1000);
 }
 
 export const showOperator = () => {
@@ -67,13 +66,6 @@ export const setOperator = () => {
 export const duration = () => {
     let ende = performance.now();
     return ende - model.start;
-}
-
-export const addResult = (text) => {
-    var li = document.createElement("li");
-    li.appendChild(document.createTextNode(text));
-    protElm.appendChild(li);
-    protElm.scrollTop = protElm.scrollHeight;
 }
 
 export const calc = (val1, val2, operator) => {
