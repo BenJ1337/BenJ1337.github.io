@@ -3,5 +3,6 @@ export const model = {
     maxValue1: 10,
     maxValue2: 10,
     attempts: 1,
-    operator: 'x'
+    operator: 'x',
+    history: []
 }

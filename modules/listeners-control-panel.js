@@ -5,6 +5,8 @@ import {
     controlElementsElm
 } from './ui-elements.js';
 import { model } from './model.js';
+import { resetProtocol } from './controller.js';
+import { storeModel } from './storage.js';
 
 const createLinkTag = (url) => {
     const link = document.createElement("link");
@@ -23,6 +25,7 @@ export const addListeners = () => {
         newTerm();
         resetTimerAndSetFocus();
         setOperator();
+        storeModel(model);
         showOperator();
         console.debug(model);
     }
@@ -51,14 +54,19 @@ export const addListeners = () => {
         protElm.style.opacity = '1';
     }
 
+    document.getElementById("resetProt").onclick = (button) => {
+        resetProtocol(model);
+        resetTimerAndSetFocus();
+    }
+
     document.getElementById("showHideTools").onclick = (button) => {
         resetTimerAndSetFocus();
         if(controlElementsElm.style.display == 'none') {
             controlElementsElm.style.display = 'initial';
-            button.target.textContent = 'Hide Controls';
+            button.target.textContent = 'Hide';
         } else {
             controlElementsElm.style.display = 'none';
-            button.target.textContent = 'Show Controls';
+            button.target.textContent = 'Show';
         }
     }
 
