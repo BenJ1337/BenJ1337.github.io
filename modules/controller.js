@@ -1,5 +1,7 @@
 import {
-    protElm 
+    protElm,
+    maxValue1Elm,
+    maxValue2Elm
 } from './ui-elements.js';
 import { storeModel } from './storage.js';
 
@@ -11,10 +13,12 @@ export const addResult = (prot) => {
     protElm.scrollTop = protElm.scrollHeight;
 }
 
-export const restoreProtocol = model => {
+export const restoreGuiState = model => {
     model.history.forEach(entry => {
         addResult(entry);
     });
+    maxValue1Elm.placeholder = model.maxValue1;
+    maxValue2Elm.placeholder = model.maxValue2;
 }
 
 export const resetProtocol = model => {

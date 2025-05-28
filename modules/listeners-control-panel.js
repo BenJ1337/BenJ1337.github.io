@@ -6,6 +6,7 @@ import {
 } from './ui-elements.js';
 import { model } from './model.js';
 import { resetProtocol } from './controller.js';
+import { storeModel } from './storage.js';
 
 const createLinkTag = (url) => {
     const link = document.createElement("link");
@@ -24,6 +25,7 @@ export const addListeners = () => {
         newTerm();
         resetTimerAndSetFocus();
         setOperator();
+        storeModel(model);
         showOperator();
         console.debug(model);
     }
