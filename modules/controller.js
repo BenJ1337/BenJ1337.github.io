@@ -6,7 +6,7 @@ import {
 import { storeModel } from './storage.js';
 
 export const addResult = (prot) => {
-    const text = `${prot.value1} x ${prot.value1} = ${prot.input} | Speed: ${prot.duration.toString().padEnd(2, ' ')} seconds | Attempts: ${prot.attempts}`
+    const text = `${prot.value1} x ${prot.value2} = ${prot.input} | Speed: ${prot.duration.toString().padEnd(2, ' ')} seconds | Attempts: ${prot.attempts}`
     var li = document.createElement("li");
     li.appendChild(document.createTextNode(text));
     protElm.appendChild(li);
